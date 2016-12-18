@@ -19,6 +19,7 @@ import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInsta
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -27,6 +28,7 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.doubleclickbidmanager.DoubleClickBidManager;
 import com.google.common.collect.ImmutableSet;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Set;
@@ -58,24 +60,25 @@ public class SecurityUtilities {
 
   private static FileDataStoreFactory dataStoreFactory;
   
+  public static String token;
+  
   public static Credential getUserCredential() throws Exception {
-    GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(
-        JSON_FACTORY, 
-        new InputStreamReader(SecurityUtilities.class.
-            getResourceAsStream("/client_secrets.json")));    
-    dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
+	  GoogleCredential credential = GoogleCredential.fromStream(new FileInputStream("F:\\GoogleAds-bd4350a329cf.json"));
+
+	    // Update the credential object with appropriate scopes and impersonation info.
+	    credential = new GoogleCredential.Builder()
+	        .setTransport(credential.getTransport())
+	        .setJsonFactory(credential.getJsonFactory())
+	        .setServiceAccountId(credential.getServiceAccountId())
+	        .setServiceAccountPrivateKey(credential.getServiceAccountPrivateKey())
+	        .setServiceAccountScopes(SCOPES)
+	        // Set the email of the user you are impersonating (this can be yourself).
+	        .setServiceAccountUser("agrawal.saurabh167@gmail.com")
+	        .build();
+
+	    return credential;
     
-    // set up authorization code flow.
-    GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-        HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)       
-        .setDataStoreFactory(dataStoreFactory)
-        .build();
-    // authorize and get credentials.
-    Credential credential =
-        new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver())
-          .authorize("user");
     
-    return credential;
   }
   
   private static HttpRequestInitializer setHttpTimeout(

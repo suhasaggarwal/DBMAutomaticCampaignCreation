@@ -15,12 +15,17 @@
 package com.dbm.campaignCreation;
 
 import com.google.api.services.doubleclickbidmanager.DoubleClickBidManager;
+import com.google.api.services.doubleclickbidmanager.DoubleClickBidManager.Sdf;
+import com.google.api.services.doubleclickbidmanager.DoubleClickBidManager.Sdf.Download;
 import com.google.api.services.doubleclickbidmanager.model.DownloadLineItemsRequest;
 import com.google.api.services.doubleclickbidmanager.model.DownloadLineItemsResponse;
+import com.google.api.services.doubleclickbidmanager.model.DownloadRequest;
+import com.google.api.services.doubleclickbidmanager.model.DownloadResponse;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 
 import java.io.File;
+import java.util.Arrays;
 
 /**
  * In DoubleClick Bid Manager, line items bid on impressions and deliver ads 
@@ -32,9 +37,29 @@ public class DownloadCampaignData {
   public static void main(String[] args) throws Exception {
     // Get an authenticated connection to the API.
     DoubleClickBidManager service = SecurityUtilities.getAPIService();
+   
+   
+    Sdf sdf = service.sdf();
     
+  //  UploadRequest 
+    
+   
+    DownloadRequest request = new DownloadRequest().setFilterType("ADVERTISER_ID").setFilterIds(Arrays.asList(932635L));
+    	    
+    
+    DownloadResponse response = service.sdf().download(request).execute();
+    		
+    Download obj  = sdf.download(request);
+  //  obj.setOauthToken(SecurityUtilities.token);
+  
+    response  = obj.execute();
+    System.out.println(response.getLineItems());
     // Setup any filtering on the API request
-    DownloadLineItemsRequest dliRequest = new DownloadLineItemsRequest();
+   
+  
+    
+    
+    DownloadLineItemsRequest dliRequest = new DownloadLineItemsRequest().setFilterType("ADVERTISER_ID").setFilterIds(Arrays.asList(696834L));
     /* If your download requests times out you may need to filter to reduce the
      * number of items returned - the commented code below filters on 
      * ADVERTISER_ID, refer to the reference guide at 
@@ -44,8 +69,15 @@ public class DownloadCampaignData {
       // .setFilterIds(Arrays.asList(0L, 1L, 2L));
 
     // Call the API, getting the (filtered) list of line items.
+   
+  
+    
+    
     DownloadLineItemsResponse dliResponse =
         service.lineitems().downloadlineitems(dliRequest).execute();
+    
+    System.out.println(dliRequest.getFileSpec());
+    
     File to = new File("line_items.csv");
     Files.write(dliResponse.getLineItems(), to, Charsets.UTF_8);
     System.out.println("Download complete.");

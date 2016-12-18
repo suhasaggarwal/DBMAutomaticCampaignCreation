@@ -20,20 +20,22 @@
   
   
   <dependencies>
-   <dependency>
-      <groupId>com.google.apis</groupId>
-      <artifactId>google-api-services-doubleclickbidmanager</artifactId>
-      <version>v1-rev29-1.20.0</version>
-    </dependency>
+  <!-- https://mvnrepository.com/artifact/com.google.apis/google-api-services-doubleclickbidmanager -->
+  <dependency>
+    <groupId>com.google.apis</groupId>
+    <artifactId>google-api-services-doubleclickbidmanager</artifactId>
+    <version>v1-rev44-1.22.0</version>
+  </dependency>
+
       <dependency>
       <groupId>com.google.oauth-client</groupId>
       <artifactId>google-oauth-client-jetty</artifactId>
-      <version>1.20.0</version>
+      <version>1.22.0</version>
     </dependency>
         <dependency>
       <groupId>com.google.http-client</groupId>
       <artifactId>google-http-client-jackson2</artifactId>
-      <version>1.19.0</version>
+      <version>1.22.0</version>
         </dependency>
         
     <!-- Ads client library dependencies -->
@@ -42,16 +44,8 @@
       <artifactId>ads-lib</artifactId>
       <version>2.13.0</version>
     </dependency>
-    <dependency>
-      <groupId>com.google.api-ads</groupId>
-      <artifactId>adwords-axis</artifactId>
-      <version>2.13.0</version>
-    </dependency>
-    <dependency>
-      <groupId>com.google.api-ads</groupId>
-      <artifactId>adwords-axis-utility-extension</artifactId>
-      <version>2.13.0-beta</version>
-    </dependency>
+    
+    
     <dependency>
       <groupId>com.google.api-client</groupId>
       <artifactId>google-api-client</artifactId>
@@ -62,7 +56,7 @@
     <dependency>
       <groupId>com.google.http-client</groupId>
       <artifactId>google-http-client-jackson2</artifactId>
-      <version>1.21.0</version>
+      <version>1.22.0</version>
     </dependency>
   
     <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->

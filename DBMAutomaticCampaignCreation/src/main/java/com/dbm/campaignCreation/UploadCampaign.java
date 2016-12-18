@@ -16,11 +16,14 @@ package com.dbm.campaignCreation;
 
 import com.google.api.services.doubleclickbidmanager.DoubleClickBidManager;
 import com.google.api.services.doubleclickbidmanager.DoubleClickBidManager.Lineitems;
+import com.google.api.services.doubleclickbidmanager.DoubleClickBidManager.Lineitems.Uploadlineitems;
 import com.google.api.services.doubleclickbidmanager.model.UploadLineItemsRequest;
 import com.google.api.services.doubleclickbidmanager.model.UploadLineItemsResponse;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
+
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -31,25 +34,51 @@ import java.util.List;
  */
 public class UploadCampaign {
   // When the DRYRUN flag is set to true, no actual changes will happen.
-  static final boolean DRYRUN = true;
+  static final boolean DRYRUN = false;
 
-  public static void main(String[] args) throws Exception {
+  public static void main(String[] args) {
     // Get an authenticated connection to the API.
-    DoubleClickBidManager service = SecurityUtilities.getAPIService();
-
+    DoubleClickBidManager service = null;
+	try {
+		service = SecurityUtilities.getAPIService();
+	} catch (Exception e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
+    
+	
+  
+    
     // Get the line items from the csv file.
     File from = new File("lineitems.csv");
-    String lineItems = Files.toString(from, Charsets.UTF_8);
+    String lineItems = null;
+	try {
+		lineItems = Files.toString(from, Charsets.UTF_8);
+	} catch (IOException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
 
     // Set up the request details including the line items.
     UploadLineItemsRequest uliContent =
-        new UploadLineItemsRequest().setDryRun(DRYRUN).setLineItems(lineItems);
+        new UploadLineItemsRequest().setFormat("CSV").setDryRun(DRYRUN).setLineItems(lineItems);
     // Call the API, passing in the request details.
-    UploadLineItemsResponse uliResponse = service.lineitems()
-        .uploadlineitems(uliContent).execute();
-
+    UploadLineItemsResponse uliResponse = null;
+	try {
+		uliResponse = service.lineitems()
+		    .uploadlineitems(uliContent).execute();
+	} catch (IOException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
+ 
+    
+	
+    
     // Check for errors.
     List<String> errorList = uliResponse.getUploadStatus().getErrors();
+   
+    
     if (errorList == null) {
       System.out.println("Upload Successful");
     } else {

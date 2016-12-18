@@ -33,7 +33,7 @@ gs://gdbm-public/entity/20161111.0.SupportedExchange.json
 gs://gdbm-public/entity/20161111.0.UniversalSite.json
 gs://gdbm-public/entity/20161111.0.summary.json
 
-Creatives can be added using corresonding creatiive ids and mapping it to  - Creative Assignments Headers
+Creatives can be added using corresponding creative ids and mapping it to  - Creative Assignments Headers
 
 Description of line-items.csv
 -----------------------------
