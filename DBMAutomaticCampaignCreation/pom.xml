@@ -35,7 +35,7 @@
         <dependency>
       <groupId>com.google.http-client</groupId>
       <artifactId>google-http-client-jackson2</artifactId>
-      <version>1.22.0</version>
+      <version>1.41.5</version>
         </dependency>
         
     <!-- Ads client library dependencies -->
@@ -56,7 +56,7 @@
     <dependency>
       <groupId>com.google.http-client</groupId>
       <artifactId>google-http-client-jackson2</artifactId>
-      <version>1.22.0</version>
+      <version>1.41.5</version>
     </dependency>
   
     <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
